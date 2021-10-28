@@ -29,16 +29,23 @@ public class ProductoController {
     public List<Producto> listar() {
         return productoService.findAll()
                 .stream()
-                .peek(p -> //p.setPort(Integer.parseInt(Objects.requireNonNull(env.getProperty("local.server.port"))))
-                        p.setPort(port) )
+                .peek(p ->
+                        p.setPort(Integer.parseInt(Objects.requireNonNull(env.getProperty("local.server.port"))))
+                        //p.setPort(port)
+                )
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/ver/{id}")
     public Producto detalle(@PathVariable Long id) {
         Producto producto = productoService.findById(id);
-        //producto.setPort(Integer.parseInt(Objects.requireNonNull(env.getProperty("local.server.port"))));
-        producto.setPort(port);
+        producto.setPort(Integer.parseInt(Objects.requireNonNull(env.getProperty("local.server.port"))));
+        //producto.setPort(port);
+        /*try {
+            Thread.sleep(2000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
         return producto;
     }
 }
